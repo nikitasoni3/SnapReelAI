@@ -46,6 +46,7 @@ All generated reels are displayed here. You can preview, play, and delete them a
 ```bash
 git clone https://github.com/your-username/snapreelai.git
 cd snapreelai
+```
 
 2. Create and activate a virtual environment
 For Windows:
