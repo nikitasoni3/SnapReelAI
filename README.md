@@ -48,24 +48,25 @@ git clone https://github.com/your-username/snapreelai.git
 cd snapreelai
 ```
 
-2. Create and activate a virtual environment
+### 2. Create and activate a virtual environment
 For Windows:
-
+```bash
 python -m venv venv
 venv\Scripts\activate
-
+```
 For Mac/Linux:
-
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
-3. Install dependencies
+### 3. Install dependencies
 
 Make sure you have pip updated, then install the required packages:
-
+```bash
 pip install --upgrade pip
 pip install -r requirements.txt
-
+```
 
 If you don’t already have a requirements.txt, create one in the project root and add:
 
@@ -74,11 +75,14 @@ moviepy
 plyer
 werkzeug
 
-4. Run the Flask app
+### 4. Run the Flask app
+```bash
 python main.py
+```
 
-5. Access the application
+### 5. Access the application
 
 Once the server is running, open your browser and visit:
-
+```bash
 http://127.0.0.1:5000/
+```
