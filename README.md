@@ -69,11 +69,12 @@ pip install -r requirements.txt
 ```
 
 If you don’t already have a requirements.txt, create one in the project root and add:
-
+```nginx
 Flask
 moviepy
 plyer
 werkzeug
+```
 
 ### 4. Run the Flask app
 ```bash
