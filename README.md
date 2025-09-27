@@ -46,3 +46,38 @@ All generated reels are displayed here. You can preview, play, and delete them a
 ```bash
 git clone https://github.com/your-username/snapreelai.git
 cd snapreelai
+
+2. Create and activate a virtual environment
+For Windows:
+
+python -m venv venv
+venv\Scripts\activate
+
+For Mac/Linux:
+
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install dependencies
+
+Make sure you have pip updated, then install the required packages:
+
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
+If you don’t already have a requirements.txt, create one in the project root and add:
+
+Flask
+moviepy
+plyer
+werkzeug
+
+4. Run the Flask app
+python main.py
+
+5. Access the application
+
+Once the server is running, open your browser and visit:
+
+http://127.0.0.1:5000/
