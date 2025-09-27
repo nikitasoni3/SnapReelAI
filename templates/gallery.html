@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery - AI Reel Generator{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container gallery-container">
+    <h1 class="gallery-title">Reel Gallery</h1>
+    <div class="gallery-grid">
+        {% for reel in reels %}
+            <div class="video-wrapper" id="video-{{ loop.index }}">
+                <video src="/static/reels/{{ reel }}" controls></video>
+                <button class="delete-btn" onclick="deleteReel('{{ reel }}', 'video-{{ loop.index }}')">×</button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
+
+{% block extra_js %}
+<script>
+function deleteReel(filename, elementId) {
+    if (!confirm("Are you sure you want to delete this reel?")) return;
+
+    fetch(`/delete-reel/${filename}`, {
+        method: "DELETE"
+    })
+    .then(response => {
+        if (response.ok) {
+            document.getElementById(elementId).remove();
+        } else {
+            alert("❌ Failed to delete reel.");
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("⚠️ Error deleting reel.");
+    });
+}
+</script>
+{% endblock %}

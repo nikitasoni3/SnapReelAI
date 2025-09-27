@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Create Reel - AI Reel Generator{% endblock %}
+
+{% block extra_css %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="upload-section">
+    <div class="container">
+        <div class="upload-container">
+            <h1 class="upload-title">Create Your Reel</h1>
+            <p class="upload-instructions">Upload your video files to create an amazing reel. You can upload multiple files.</p>
+            
+            <form action="/create" enctype="multipart/form-data" method="post" class="dropzone" id="myDropzone" >
+                <div class="fallback">
+                    <div id="fileInputs">
+                        <div class="file-input-group">
+                            <input name="file1" type="file" class="file-input" accept="image/*" onchange="validateFileType(this); validateForm()"/>
+                            <input name="uuid" type="hidden" value="{{myid}}">
+                            <button type="button" class="remove-file-btn" onclick="removeFileInput(this)" disabled>×</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-file-btn" onclick="addFileInput()">+ Add File</button>
+                </div>
+                
+                <div class="text-input-container">
+                    <textarea class="text-input" id="textInput" oninput="checkInput()" name="text" placeholder="Enter your text to be added as voice here..." rows="4"></textarea>
+                </div>
+                
+                <div class="loader-overlay" id="loaderOverlay">
+                    <div class="loader"></div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                    Create Reel
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let fileCounter = 2; // Start from 2 since we already have file1
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+
+    function addFileInput() {
+        const fileInputs = document.getElementById('fileInputs');
+        const newFileInput = document.createElement('div');
+        newFileInput.className = 'file-input-group';
+        newFileInput.innerHTML = `
+            <input name="file${fileCounter}" type="file" class="file-input"
+            accept="image/*" onchange="validateFileType(this); validateForm()" />
+            <button type="button" class="remove-file-btn" onclick="removeFileInput(this)">×</button>
+        `;
+        fileInputs.appendChild(newFileInput);
+        fileCounter++;
+        validateForm();
+    }
+
+    function removeFileInput(button) {
+        const fileInputGroup = button.parentElement;
+        fileInputGroup.remove();
+        validateForm();
+    }
+
+    function validateForm() {
+        const textInput = document.getElementById("textInput").value.trim();
+        const fileInputs = document.querySelectorAll(".file-input");
+        const submitBtn = document.getElementById("submitBtn");
+        let hasFile = false;
+        fileInputs.forEach(input => {
+            if (input.files.length > 0) {
+                hasFile = true;
+            }
+        });
+
+        submitBtn.disabled = !(hasFile && textInput.length > 0);
+    }
+
+    function validateFileType(input) {
+        if (input.files.length > 0) {
+            const file = input.files[0];
+            if (!allowedTypes.includes(file.type)) {
+                alert("❌ Only image files (JPG, PNG, GIF, WEBP) are allowed!");
+                input.value = "";
+            } else {
+                const existingError = input.parentElement.querySelector(".file-error");
+                if (existingError) existingError.remove();
+            }
+        }
+        validateForm();
+    }
+
+    document.getElementById("textInput").addEventListener("input", validateForm);
+
+    document.getElementById("myDropzone").addEventListener("submit", function () {
+        const submitBtn = document.getElementById("submitBtn");
+        const loaderOverlay = document.getElementById("loaderOverlay");
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add("btn-disabled");
+        submitBtn.innerText = "Creating...";
+
+        loaderOverlay.style.display = "flex"; 
+    });
+
+</script>
+{% endblock %} 

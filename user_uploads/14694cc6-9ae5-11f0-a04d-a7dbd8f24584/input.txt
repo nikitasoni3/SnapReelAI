@@ -1,0 +1,2 @@
+file 'image_34.png'
+duration1

@@ -1,0 +1,4 @@
+file '23.jpg'
+duration1
+file '22.jpg'
+duration1

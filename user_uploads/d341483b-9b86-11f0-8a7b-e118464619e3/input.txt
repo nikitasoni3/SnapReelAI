@@ -1,0 +1,2 @@
+file '8.jpg'
+duration1
